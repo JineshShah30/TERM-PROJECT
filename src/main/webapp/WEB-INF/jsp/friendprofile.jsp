@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Your Profile</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js">
 </script>
 </head>
+
 <body>
+
 <script>
   // This is called with the results from from FB.getLoginStatus().
   function statusChangeCallback(response) {
@@ -102,13 +105,34 @@
     });
     
   }
+    function sendid(q){
+    	
+    	console.log("hhhheeeyyyy");
+    	console.log(q);
+    	
+    	$('[name="postid"]').val(q);
+    	  $("#redirectForm").submit();
+    }
 </script>
+
+
+
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
     <img src="apple_raw.png" width="30" height="30" class="d-inline-block align-top"/>
     HeyThere !
   </a>
-  <fb:login-button class="fb-login-button" data-max-rows="1"
+  <form action="/createpost">
+  
+  <button type="submit"> Post </button>
+ </form>
+ 
+  <form action="/editprofile">
+  
+  <button type="submit"> Edit Profile </button>
+ </form>
+  
+ <fb:login-button class="fb-login-button" data-max-rows="1"
 				data-size="large" data-button-type="login_with"
 				data-show-faces="false" data-auto-logout-link="true"
 				data-use-continue-as="false"
@@ -117,18 +141,31 @@
 			</fb:login-button>
 </nav>
 <br> 
-<form action="/save" method="post" enctype="multipart/form-data" >
-  <div class="form-group">
-    <label for="ProfilePic">Profile Picture</label>
-    <input type="file" class="form-control" name="propic"/>
-  </div>
+<div class="container">
+  <div class="row">
+    <div class="col-4"> 
+      <img src="${u.imgurl}" alt="Profile Page Image" height="250" width="250" > 
+    </div>
+    <div class="col">
+      
+       <h3> <c:out value="${u.name}"/> </h3>
+       <p> <c:out value="${u.description}"/>  
+       </p>	  
+    </div>
+    </div>
+      </div> <br> <br>
+      <h3> Thumbnail </h3>
+      <c:forEach items="${post}" var="i">
+      
+  <img src="${i.imguri}"  height="250" width="250" onclick="sendid('${i.postid}')"> 
   
-   <div class="form-group">
-    <label for="shortdescription">Description</label>
-    <textarea rows="4" cols="50" class="form-control" name="description"></textarea>
-  </div>
-  
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</c:forEach>
+<form action="/play" id="redirectForm">
+<input type="hidden" name="postid" />
+</form> 
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
 </body>
 </html>

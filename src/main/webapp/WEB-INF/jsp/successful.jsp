@@ -33,7 +33,6 @@
         'into this app.';
     }
   }
-
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
@@ -42,7 +41,6 @@
       statusChangeCallback(response);
     });
   }
-
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '378682475964386',
@@ -51,7 +49,6 @@
       xfbml      : true,  // parse social plugins on this page
       version    : 'v2.8' // use graph api version 2.8
     });
-
     // Now that we've initialized the JavaScript SDK, we call 
     // FB.getLoginStatus().  This function gets the state of the
     // person visiting this page and can return one of three states to
@@ -63,13 +60,10 @@
     //    your app or not.
     //
     // These three cases are handled in the callback function.
-
     FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
     });
-
   };
-
   // Load the SDK asynchronously
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -78,7 +72,6 @@
     js.src = "https://connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI() {
@@ -112,13 +105,34 @@
     });
     
   }
+    function sendid(q){
+    	  $('[name="postid"]').val(q);
+    	  $("#redirectForm").submit();
+    }
 </script>
+
+<form action="play" id="redirectForm">
+<input type="hidden" name="postid" />
+</form> 
 
 <nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#">
     <img src="apple_raw.png" width="30" height="30" class="d-inline-block align-top"/>
     HeyThere !
   </a>
+  <form action="/createpost">
+  
+  <button type="submit"> Post </button>
+ </form>
+ 
+  <form action="/editprofile">
+  
+  <button type="submit"> Edit Profile </button>
+ </form>
+  <form action="/viewfriends">
+  
+  <button type="submit"> View Friends </button>
+ </form>
  <fb:login-button class="fb-login-button" data-max-rows="1"
 				data-size="large" data-button-type="login_with"
 				data-show-faces="false" data-auto-logout-link="true"
@@ -140,9 +154,13 @@
        </p>	  
     </div>
     </div>
-      </div>
-
-
+      </div> <br> <br>
+      <h3> Thumbnail </h3>
+      <c:forEach items="${post}" var="i">
+      
+  <img src="${i.imguri}"  height="250" width="250" onclick="sendid('${i.postid}')"> 
+  
+</c:forEach>
 <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>

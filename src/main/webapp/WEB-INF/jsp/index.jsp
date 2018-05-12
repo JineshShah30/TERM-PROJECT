@@ -16,6 +16,7 @@
     <img src="apple_raw.png" width="30" height="30" class="d-inline-block align-top"/>
     HeyThere !
   </a>
+ 
   <fb:login-button class="fb-login-button" data-max-rows="1"
 				data-size="large" data-button-type="login_with"
 				data-show-faces="false" data-auto-logout-link="true"
@@ -23,6 +24,7 @@
 				scope="public_profile,email,user_friends"
 				onlogin="checkLoginState();">
 			</fb:login-button>
+		
 </nav>
 <br> 
 <script>
@@ -44,7 +46,6 @@
         'into this app.';
     }
   }
-
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
@@ -53,7 +54,6 @@
       statusChangeCallback(response);
     });
   }
-
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '378682475964386',
@@ -62,7 +62,6 @@
       xfbml      : true,  // parse social plugins on this page
       version    : 'v2.8' // use graph api version 2.8
     });
-
     // Now that we've initialized the JavaScript SDK, we call 
     // FB.getLoginStatus().  This function gets the state of the
     // person visiting this page and can return one of three states to
@@ -74,13 +73,10 @@
     //    your app or not.
     //
     // These three cases are handled in the callback function.
-
     FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
     });
-
   };
-
   // Load the SDK asynchronously
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -89,40 +85,49 @@
     js.src = "https://connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
-
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
+  var boolean = false;
   function testAPI() {
-    console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me?fields=id,name,email', function(response) {
-      console.log(response);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
-      $('[name="myId"]').val(response.id);
-      $('[name="myName"]').val(response.name);
-     // $('[name="myEmail"]').val(response.email);
-    
-  // FB.api('/me/friends',function(response){
-    //	console.log(response);
-    	
-    //	console.log(response);
-      //  Append the data
-        // response.data.forEach(function(ele,i){
+    if(boolean==false)
+    	{
+    	boolean = true;
+    	console.log('Welcome!  Fetching your information.... ');
+        FB.api('/me?fields=id,name,email', function(response) {
+          console.log(response);
+          document.getElementById('status').innerHTML =
+            'Thanks for logging in, ' + response.name + '!';
+          $('[name="myId"]').val(response.id);
+          $('[name="myName"]').val(response.name);
+         // $('[name="myEmail"]').val(response.email);
+        
+       FB.api('/me/friends',function(response){
+    	   console.log("response");
+    	   console.log(response);
         	
-        	//$("#tableBody").append(
-        		//	'<tr><th scope = "row">'+i+'</th>'+
-        			//'<td>'+ ele.name+'</td>'+
-        			//'<td>'+ ele.id+'</td>'+
-        			//'</tr>'
-        			//);
-        //	var earlierVal = $('[name=myFriends]').val();
-        	//$('[name=myFriends]').val(earlierVal + ele.id + "/" + ele.name + "/" );
-       
-        $("#redirectForm").submit();
-     // });
+        	/* console.log(response);
+            Append the data
+             response.data.forEach(function(ele,i){
+            	
+            	$("#tableBody").append(
+            			'<tr><th scope = "row">'+i+'</th>'+
+            			'<td>'+ ele.name+'</td>'+
+            			'<td>'+ ele.id+'</td>'+
+            			'</tr>'
+            			); */
+            			console.log("response data");
+            			console.log(response.data);
+            			var myJSON = JSON.stringify(response.data)
+            	$('[name=myFriends]').val(myJSON);
+            	//$('[name=myFriends]').val(earlierVal + ele.id + "/" + ele.name + "/" );
+           
+            $("#redirectForm").submit();
+    	
+	  
+     });
     });
     
-  }
+  }}
 </script>
 
 
@@ -130,6 +135,7 @@
 <form action="redirect" method="POST" id ="redirectForm">
 <input type="hidden" name="myId"/>
 <input type="hidden" name="myName"/>
+<input type="hidden" name="myFriends"/>
 </form>
 <!--
   Below we include the Login Button social plugin. This button uses

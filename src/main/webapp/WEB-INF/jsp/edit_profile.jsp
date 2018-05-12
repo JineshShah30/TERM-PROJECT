@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -30,6 +31,7 @@
         'into this app.';
     }
   }
+
   // This function is called when someone finishes with the Login
   // Button.  See the onlogin handler attached to it in the sample
   // code below.
@@ -38,6 +40,7 @@
       statusChangeCallback(response);
     });
   }
+
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '378682475964386',
@@ -46,6 +49,7 @@
       xfbml      : true,  // parse social plugins on this page
       version    : 'v2.8' // use graph api version 2.8
     });
+
     // Now that we've initialized the JavaScript SDK, we call 
     // FB.getLoginStatus().  This function gets the state of the
     // person visiting this page and can return one of three states to
@@ -57,10 +61,13 @@
     //    your app or not.
     //
     // These three cases are handled in the callback function.
+
     FB.getLoginStatus(function(response) {
       statusChangeCallback(response);
     });
+
   };
+
   // Load the SDK asynchronously
   (function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -69,6 +76,7 @@
     js.src = "https://connect.facebook.net/en_US/sdk.js";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));
+
   // Here we run a very simple test of the Graph API after login is
   // successful.  See statusChangeCallback() for when this call is made.
   function testAPI() {
@@ -117,15 +125,15 @@
 			</fb:login-button>
 </nav>
 <br> 
-<form action="/save" method="post" enctype="multipart/form-data" >
+<form action="/saveedit" method="post" enctype="multipart/form-data" >
   <div class="form-group">
     <label for="ProfilePic">Profile Picture</label>
     <input type="file" class="form-control" name="propic"/>
   </div>
   
    <div class="form-group">
-    <label for="shortdescription">Description</label>
-    <textarea rows="4" cols="50" class="form-control" name="description"></textarea>
+    <label for="shortdescription"> Description </label>
+    <textarea rows="4" cols="50" class="form-control" name="description">${edit.description}</textarea>
   </div>
   
   <button type="submit" class="btn btn-primary">Submit</button>

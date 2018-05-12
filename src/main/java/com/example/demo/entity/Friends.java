@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @IdClass(UserFriendComposite.class)
-public class UserFriends {
+public class Friends {
 	
 @Id
 @ManyToOne
@@ -19,11 +19,11 @@ private User user;
 private String friendid;
 
 
-public UserFriends() {
+public Friends() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public UserFriends(String friendid, User user) {
+public Friends(String friendid, User user) {
 	super();
 	this.friendid = friendid;
 	this.user = user;

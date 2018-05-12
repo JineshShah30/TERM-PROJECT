@@ -21,32 +21,41 @@ public class User {
 	private String description;
 	private String imgurl;
 	
+
+	@OneToMany(cascade= CascadeType.ALL)
+	@JoinColumn(name="userid")
+	public List<Post> post;
 	
-	@OneToMany(fetch = FetchType.EAGER,mappedBy="user",cascade = CascadeType.ALL)
-	private List<UserFriends> friendList;
 	
-	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="userid")
+	private List<Friends> friends;
+
+
 	public User() {
-		// TODO Auto-generated constructor stub
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	
-	public User(String userid, String name, String description, String imgurl, List<UserFriends> friendList) {
+
+	public User(String userid, String name, String description, String imgurl, List<Post> post, List<Friends> friends) {
 		super();
 		this.userid = userid;
 		this.name = name;
 		this.description = description;
 		this.imgurl = imgurl;
-		this.friendList = friendList;
+		this.post = post;
+		this.friends = friends;
 	}
 
-	public List<UserFriends> getFriendList() {
-		return friendList;
+	public List<Post> getPost() {
+		return post;
 	}
+
+	public void setPost(List<Post> post) {
+		this.post = post;
+	}
+
 	
-	public void setFriendList(List<UserFriends> friendList) {
-		this.friendList = friendList;
-	}
 	
 	public String getImgurl() {
 		return imgurl;
@@ -74,6 +83,14 @@ public class User {
 		this.description = description;
 	}
 	
+	public List<Friends> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<Friends> friends) {
+		this.friends = friends;
+	}
+
 	@Override
 	public String toString() {
 		return "User [userId=" + userid + ", userName=" + name + ", profilePhoto="
